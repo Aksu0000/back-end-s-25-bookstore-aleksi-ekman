@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
   <head>
-    <title>Add Book</title>
+    <title>Edit book</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
   <body>
-    <h2>Add new book</h2>
+    <h2>Edit book</h2>
 
     <div>
+    
     <form th:object="${book}" th:action="@{/save}" action="#" method="post">
+        <input type="hidden" th:field="*{id}" />
+        
         <label for="author">Author</label>
         <input type="text" id="author" th:field="*{author}" />
         <br>
