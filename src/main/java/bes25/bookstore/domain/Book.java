@@ -1,7 +1,15 @@
 package bes25.bookstore.domain;
 
-public class Book {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String title;
     private String author;
     private int publicationYear;
@@ -18,7 +26,6 @@ public class Book {
         this.price = price;
     }
 
-    // Getters and setters
     public String getTitle() {
         return title;
     }
