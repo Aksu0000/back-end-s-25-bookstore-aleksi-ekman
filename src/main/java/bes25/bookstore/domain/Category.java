@@ -2,6 +2,8 @@ package bes25.bookstore.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 //import jakarta.validation.constraints.Min;
 //import jakarta.validation.constraints.NotEmpty;
@@ -16,6 +18,7 @@ public class Category {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @JsonIgnore
     private List<Book> books;
 
     public Category() {}
