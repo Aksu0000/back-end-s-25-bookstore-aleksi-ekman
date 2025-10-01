@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
@@ -8,35 +8,47 @@
 </head>
 
 <body>
-    <h1>Books</h1>
+    <div class="container">
+        <h1>Books</h1>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <span>Logged in as: <span sec:authentication="name"></span></span>
+            <form th:action="@{/logout}" method="post" style="margin: 0;">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        </div>
 
-    <table class="table table-striped">
-    <tr>
-        <th>Author</th>
-        <th>Title</th>
-        <th>ISBN</th>
-        <th>Year</th>
-        <th>Category</th>
-        <!-- <th>Price</th> -->
-        <th></th>
-        <th></th>
-    </tr>
-        <tr th:each="book : ${books}">
-        <td th:text="${book.author}">Author</td>
-        <td th:text="${book.title}">Title</td>
-        <td th:text="${book.isbn}">ISBN</td>
-        <td th:text="${book.publicationYear}">Year</td>
-        <td th:text="${book.category.name}"></td>
-        <!-- <td th:text="${book.price}">Price</td> -->
-        <td>
-            <a th:href="@{/deleteBook/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>
-        </td>
-        <td>
-            <a th:href="@{/editBook/{id}(id=${book.id})}" class="btn btn-warning">Edit</a>
-        </td>
-        </tr>
-    </table>
-    <a href="/add" class="btn btn-success">Add Book</a>
+        <br>
+
+        <table class="table table-striped">
+            <tr>
+                <th>Author</th>
+                <th>Title</th>
+                <th>ISBN</th>
+                <th>Year</th>
+                <th>Category</th>
+                <!-- <th>Price</th> -->
+                <th></th>
+                <th></th>
+            </tr>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.author}">Author</td>
+                <td th:text="${book.title}">Title</td>
+                <td th:text="${book.isbn}">ISBN</td>
+                <td th:text="${book.publicationYear}">Year</td>
+                <td th:text="${book.category.name}"></td>
+                <!-- <td th:text="${book.price}">Price</td> -->
+                <td sec:authorize="hasAuthority('ADMIN')">
+                    <a th:href="@{/deleteBook/{id}(id=${book.id})}" class="btn btn-danger">Delete</a>
+                </td>
+                <td>
+                    <a th:href="@{/editBook/{id}(id=${book.id})}" class="btn btn-warning">Edit</a>
+                </td>
+            </tr>
+        </table>
+        <a href="/add" class="btn btn-success">Add Book</a>
+        <br>
+        <a th:href="@{/home}" class="btn btn-info mt-3">Back to Home</a>
+    </div>
 
 </body>
 
