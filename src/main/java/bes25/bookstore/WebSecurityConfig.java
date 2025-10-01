@@ -31,6 +31,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/home", "/login").permitAll()
                         .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
                         //.requestMatchers("/booklist/**").authenticated()           
                         .requestMatchers("/deleteBook/**").hasAuthority("ADMIN")    // Delete vain ADMINille
                         .anyRequest().authenticated()                               // kaikki muut vaatii loginin
@@ -52,7 +53,9 @@ public class WebSecurityConfig {
                         .authenticationEntryPoint((request, response, authException) -> {
                             response.sendRedirect("/home");
                         })
-                );
+                )
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")) // H2 ei tue CSRF:ää
+                .headers(headers -> headers.frameOptions(frame -> frame.disable())); // H2 käyttää iframea
 
         return http.build();
     }
