@@ -3,6 +3,7 @@ package bes25.bookstore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,12 +31,12 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/css/**", "/home", "/login").permitAll()
-                        .requestMatchers("/api/**").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
-                        //.requestMatchers("/booklist/**").authenticated()           
-                        .requestMatchers("/deleteBook/**").hasAuthority("ADMIN")    // Delete vain ADMINille
-                        .anyRequest().authenticated()                               // kaikki muut vaatii loginin
-                )
+                        .requestMatchers("/deleteBook/**").hasAuthority("ADMIN") // MVC DELETE
+                        .requestMatchers(HttpMethod.DELETE, "/api/books/**").hasAuthority("ADMIN") // REST DELETE
+                        .requestMatchers("/api/**").permitAll()
+                        .anyRequest().authenticated())
+
                 .formLogin(form -> form
                         .loginPage("/login")                                        // oma login-sivu
                         .defaultSuccessUrl("/home", true)                       // loginin jälkeen booklist
@@ -54,7 +55,7 @@ public class WebSecurityConfig {
                             response.sendRedirect("/home");
                         })
                 )
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**")) // H2 ei tue CSRF:ää
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**", "/h2-console/**")) // H2 ei tue CSRF:ää
                 .headers(headers -> headers.frameOptions(frame -> frame.disable())); // H2 käyttää iframea
 
         return http.build();
