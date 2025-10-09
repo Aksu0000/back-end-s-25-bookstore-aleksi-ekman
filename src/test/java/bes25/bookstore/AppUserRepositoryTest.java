@@ -20,7 +20,7 @@ public class AppUserRepositoryTest {
     @Test
     public void testCreateSearchDeleteUser() {
         // luo käyttäjä
-        AppUser user = new AppUser("testuser", "$2a$10$hashexample",  "USER");
+        AppUser user = new AppUser("test", "user", "testuser", "$2a$10$hashexample",  "USER");
         appUserRepository.save(user);
         assertThat(user.getId()).isNotNull();
 

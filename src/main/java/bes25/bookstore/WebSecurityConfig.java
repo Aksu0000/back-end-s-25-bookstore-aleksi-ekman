@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
-    private final UserDetailsService userDetailsService; // type of attribute -> interface
+    private final UserDetailsService userDetailsService;
 
     public WebSecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -39,12 +39,12 @@ public class WebSecurityConfig {
 
                 .formLogin(form -> form
                         .loginPage("/login")                                        // oma login-sivu
-                        .defaultSuccessUrl("/home", true)                       // loginin jälkeen booklist
+                        .defaultSuccessUrl("/home", true)                       // loginin jälkeen home
                         .permitAll()
                 )
 
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/home")
+                        .logoutSuccessUrl("/home")                          // logout jälkeen booklist
                         .invalidateHttpSession(true)
                         .permitAll()
                 )

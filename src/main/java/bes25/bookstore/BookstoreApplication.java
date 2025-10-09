@@ -2,7 +2,7 @@ package bes25.bookstore;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.CommandLineRunner;
+/* import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 
 import bes25.bookstore.domain.AppUser;
@@ -10,7 +10,7 @@ import bes25.bookstore.domain.AppUserRepository;
 import bes25.bookstore.domain.Book;
 import bes25.bookstore.domain.BookRepository;
 import bes25.bookstore.domain.Category;
-import bes25.bookstore.domain.CategoryRepository;
+import bes25.bookstore.domain.CategoryRepository; */
 
 @SpringBootApplication
 public class BookstoreApplication {
@@ -20,7 +20,7 @@ public class BookstoreApplication {
 	}
 
 	// CommandLineRunner insertoi demo dataa H2:seen tai tietokantaan käynnistettäessä aplikaatio
-    @Bean
+    /* @Bean
     public CommandLineRunner demo(BookRepository repository, CategoryRepository crepository, AppUserRepository aurepository) {
         return (args) -> {
 			Category fantasy = new Category("Fantasy");
@@ -43,6 +43,6 @@ public class BookstoreApplication {
 			aurepository.save(user2);
 			aurepository.save(user3);
         };
-    }
+    } */
 
 }

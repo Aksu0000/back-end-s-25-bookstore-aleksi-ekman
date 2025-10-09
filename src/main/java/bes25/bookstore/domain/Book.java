@@ -7,30 +7,38 @@ import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "book")
 public class Book {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty(message = "Insert book title")
     @Size(min = 1, max = 250)
+    @Column(name = "title", nullable = false)
     private String title;
 
     @NotEmpty(message = "Insert book author")
     @Size(min = 1, max = 250)
+    @Column(name = "author", nullable = false)
     private String author;
 
     @NotNull(message = "Insert publication year")
     @Min(value = 0, message = "Book publication year cannot be negative")
+    @Column(name = "publication_year", nullable = false)
     private Integer publicationYear;
 
     @NotEmpty(message = "Insert ISBN")
+    @Column(name = "isbn", nullable = false, unique = true)
     private String isbn;
+
+    @Column(name = "price", nullable = false)
     private Double price;
 
     @NotNull(message = "Choose a category")
     @ManyToOne
-    @JoinColumn(name="categoryid")
+    @JoinColumn(name="category_id")
     private Category category;
 
     public Book() {}
